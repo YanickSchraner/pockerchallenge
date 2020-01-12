@@ -13,13 +13,13 @@ locale.setlocale(locale.LC_ALL, '')
 
 class CashGameConfig():
 
-    def __init__(self, initial_stack: int = 100, small_blind_amount: int = 1, table_size: int = 6,
+    def __init__(self, initial_stack: int = 100, small_blind_amount: int = 1, min_table_size: int = 6,
                  evaluations: int = 1000000, log_file_location: str = './logs'):
         now = datetime.strftime(datetime.now(), "%d.%m.%Y-%H:%M:%S")
         self.log_file_location = os.path.join(log_file_location, f"evaluation_{now}.json")
         self.initial_stack = initial_stack
         self.config = setup_config(max_round=evaluations, initial_stack=initial_stack, small_blind_amount=small_blind_amount)
-        self.table_size = table_size
+        self.min_table_size = min_table_size
         self.evaluations = evaluations
         self.player_final_stack = {}
         self.baselines = [BaselinePlayer, RandomPlayer]
@@ -37,9 +37,6 @@ class CashGameConfig():
 
 
     def register_player(self, algorithm: BaselinePlayer, name: str):
-        if self.table_size - 1 == len(self.config.players_info):
-            raise ValueError(
-                f"Only {self.table_size - 1} human players allowed. At least one baseline per table needed.")
         self.config.register_player(name=name, algorithm=algorithm)
 
 
@@ -49,6 +46,6 @@ class CashGameConfig():
 
 
     def _fill_up_with_baseline_player(self):
-        for i in range(self.table_size - len(self.config.players_info)):
+        for i in range(max(self.min_table_size - len(self.config.players_info), 1)):
             player = self.baselines[i % len(self.baselines)]()
             self.config.register_player(name=f"{str(player)}{i}", algorithm=player)
