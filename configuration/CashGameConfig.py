@@ -13,7 +13,7 @@ locale.setlocale(locale.LC_ALL, '')
 
 class CashGameConfig():
 
-    def __init__(self, initial_stack: int = 100, small_blind_amount: int = 1, min_table_size: int = 6,
+    def __init__(self, initial_stack: int = 100, small_blind_amount: int = 1, min_table_size: int = 2,
                  evaluations: int = 1000000, log_file_location: str = './logs'):
         now = datetime.strftime(datetime.now(), "%d.%m.%Y-%H:%M:%S")
         self.log_file_location = os.path.join(log_file_location, f"evaluation_{now}.json")
