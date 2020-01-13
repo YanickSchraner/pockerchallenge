@@ -4,7 +4,7 @@ from configuration.CashGameConfig import CashGameConfig
 
 if __name__ == '__main__':
     start = time.time()
-    config = CashGameConfig(evaluations=1000)
+    config = CashGameConfig(evaluations=1000, min_table_size=3)
     config.run_evaluation()
     end = time.time()
     time_taken = end - start

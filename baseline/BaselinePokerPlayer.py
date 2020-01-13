@@ -1,6 +1,11 @@
+import random
 from typing import Dict, List, Union, Tuple
+
+from pypokerengine.utils.card_utils import estimate_hole_card_win_rate, gen_cards
+
 from pypokerengine.players import BasePokerPlayer
 
+NB_SIMULATION = 1000
 
 class BaselinePlayer(BasePokerPlayer):
     """
@@ -20,9 +25,23 @@ class BaselinePlayer(BasePokerPlayer):
         :param round_state: Dictionary containing relevant information and history of the game.
         :return: action: str specifying action type. amount: int action argument.
         """
-        call_action_info = valid_actions[1]
-        action, amount = call_action_info["action"], call_action_info["amount"]
-        return action, amount
+        nb_player = len(round_state['seats'])
+        community_card = round_state['community_card']
+        win_rate = estimate_hole_card_win_rate(
+            nb_simulation=NB_SIMULATION,
+            nb_player=nb_player,
+            hole_card=gen_cards(hole_card),
+            community_card=gen_cards(community_card)
+        )
+        if win_rate >= 1.0 / nb_player:
+            action = valid_actions[2]  # fetch RAISE action info
+            amount = action["amount"]
+            action['amount'] = random.randint(amount["min"], max(amount["min"], amount["max"]))
+        elif win_rate >= .15:
+            action = valid_actions[1] # fetch CALL action info
+        else:
+            action = valid_actions[0]  # fetch FOLD action info
+        return action['action'], action['amount']
 
     def receive_game_start_message(self, game_info: Dict[str, Union[int, Dict, List]]) -> None:
         """

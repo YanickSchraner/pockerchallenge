@@ -4,6 +4,7 @@ from typing import Dict
 import locale
 
 from baseline.BaselinePokerPlayer import BaselinePlayer
+from baseline.CallBaselinePokerPlayer import CallBaselinePlayer
 from baseline.RandomPokerPlayer import RandomPlayer
 
 from pypokerengine.api.game import setup_config, start_poker
@@ -22,7 +23,7 @@ class CashGameConfig():
         self.min_table_size = min_table_size
         self.evaluations = evaluations
         self.player_final_stack = {}
-        self.baselines = [BaselinePlayer, RandomPlayer]
+        self.baselines = [BaselinePlayer, CallBaselinePlayer, RandomPlayer]
 
     def run_evaluation(self, verbose: int = 0) -> Dict[str, int]:
         self._fill_up_with_baseline_player()

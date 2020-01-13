@@ -9,7 +9,7 @@ class CallBaselinePlayer(BasePokerPlayer):
     """
 
     def __str__(self):
-        return "BaselinePlayer"
+        return "CallBaselinePlayer"
 
     def declare_action(self, valid_actions: List[Dict[str, Union[int, str]]], hole_card: List[str],
                        round_state: Dict[str, Union[int, str, List, Dict]]) -> Tuple[Union[int, str], Union[int, str]]:
