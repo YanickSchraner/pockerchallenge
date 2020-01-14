@@ -37,7 +37,7 @@ class BaselinePlayer(BasePokerPlayer):
             action = valid_actions[2]  # fetch RAISE action info
             amount = action["amount"]
             action['amount'] = random.randint(amount["min"], max(amount["min"], amount["max"]))
-        elif win_rate >= .15:
+        elif win_rate >= .1:
             action = valid_actions[1] # fetch CALL action info
         else:
             action = valid_actions[0]  # fetch FOLD action info

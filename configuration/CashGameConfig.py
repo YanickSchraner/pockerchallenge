@@ -27,7 +27,7 @@ class CashGameConfig():
 
     def run_evaluation(self, verbose: int = 0) -> Dict[str, int]:
         self._fill_up_with_baseline_player()
-        game_result = start_poker(self.config, verbose=verbose, cashgame=True, log_file_location="self.log_file_location")
+        game_result = start_poker(self.config, verbose=verbose, cashgame=True, log_file_location=self.log_file_location)
         for player in game_result['players']:
             self.player_final_stack[player['name']] = player['cashgame_stack']
         self.player_final_stack = {k: v for k, v in
