@@ -19,6 +19,9 @@ Have fun participating in this challenge 👩‍💻👨‍💻💸🎉 and do n
 # Issues
 If you have an issue or need help then open an issue on GitHub. We will get back to you.
 
+# Poker engine
+We used the [PyPokerEngine](https://github.com/ishikota/PyPokerEngine) as a base implementation. We fixed some issues and improved the performance. The forked PyPokerEngine is available [here](https://github.com/YanickSchraner/PyPokerEngine).
+
 # Create your bot
 To create your own but you have to extend the `BasePokerPlayer` class. There are 3 example baseline implementations given in the baseline directory.
 
