@@ -1,0 +1,13 @@
+{
+  "players": {
+    "MyBot": "MyBotPlayer"
+  },
+  "baselines": {
+    "BaselinePokerPlayer": "BaselinePlayer",
+    "CallBaselinePokerPlayer": "CallBaselinePlayer",
+    "RandomPokerPlayer": "RandomPlayer"
+  },
+  "n_evaluations": 100,
+  "small_blind": 1,
+  "log_file_location": "./logs"
+}

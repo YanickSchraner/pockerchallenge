@@ -27,6 +27,8 @@ To create your own but you have to extend the `BasePokerPlayer` class. There are
 
 You have to implement 7 methods. One is just used as a string representation of your bot, the `declare_action` is used to specify your next action. There are 5 methods used to provide your bot with messages from the table. You do not have to use them, but they may be useful.
 
+Make sure that your implementation is located in the `agent` module, otherwise the evaluation on AICrowd will fail.
+
 Below you find a minimal implementation of the `BasePokerPlayer`:
 ```
 class MyBot(BasePokerPlayer):
@@ -103,6 +105,29 @@ Take a look at our provided baselines in the baselines directory. You can evalua
 We may provide more elaborated baselines in the future.
 You can use the `ConsolePlayer` to join the poker table yourself and play against the baselines or your implementation.
 
+# Evaluation on AICrowd
+To load your poker bot you have to add an entry to the `evaluation_config.json` file:
+In the `players` section you have to add an entry like `<ModuleName>`: `<ClassName>` (ModuleName = Python file name without .py)
+
+Example:
+```
+{
+  "players": {
+    "MyBot": "MyBotPlayer"
+  },
+  "baselines": {
+    "BaselinePokerPlayer": "BaselinePlayer",
+    "CallBaselinePokerPlayer": "CallBaselinePlayer",
+    "RandomPokerPlayer": "RandomPlayer"
+  },
+  "n_evaluations": 100000,
+  "small_blind": 1,
+  "log_file_location": "./logs"
+}
+```
+
+You do not have to change the other config parameters.
+
 # Allowed frameworks
 To run the evaluation we have to be able to execute all provided implementation on our server automatically. As we do not want to fight with versioning issues and installation of frameworks we have to restrict the use of frameworks.
 Please make sure that your bot can run using only the dependencies listed below:
@@ -113,7 +138,7 @@ Please make sure that your bot can run using only the dependencies listed below:
 
 If you still want to use other dependencies then open an issue on GitHub with a reason why and for what purpose.
 
-# Run evaluation
+# Run evaluation local
 To run the evaluation on your environment you can use the `runEvaluation.py` file.
 On line #8 you can specify how many hands you want to evaluate and how many players should sit at the table. You can register / place your own player at the table using `config.register_player("Name", YourClass())`. The empty seats will be filled up with available baseline implementations. You can participate in the evaluation through the ConsolePlayer by registering it `config.register_player("Console", ConsolePlayer())`.
 You may register as many players in your local evaluation as you wish.
