@@ -57,7 +57,7 @@ class CashGameConfig():
         baseline_counter = 1
         while len(self.config.players_info) < n_baselines:
             for baseline in self.baselines:
-                self.config.register_player(name=f"{str(baseline)}_{baseline_counter}", algorithm=baseline())
+                self.config.register_player(name=f"{str(baseline())}_{baseline_counter}", algorithm=baseline())
                 baseline_counter += 1
                 if len(self.config.players_info) == n_baselines:
                     break
