@@ -4,7 +4,9 @@
   "baselines": {
     "BaselinePokerPlayer": "BaselinePlayer",
     "CallBaselinePokerPlayer": "CallBaselinePlayer",
-    "RandomPokerPlayer": "RandomPlayer"
+    "RandomPokerPlayer": "RandomPlayer",
+    "CallBaselinePokerPlayer": "CallBaselinePlayer2",
+    "RandomPokerPlayer": "RandomPlayer2"
   },
   "n_evaluations": 100,
   "small_blind": 1,
