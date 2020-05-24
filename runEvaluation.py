@@ -20,16 +20,22 @@ def load_configuration(config_file: str):
     return config
 
 
-def register_players(config_file, poker_config) -> None:
+def register_players(config_file, poker_config, n_baselines) -> None:
     """
     Seat baseline and players set in the evaluation_config.json file.
     :param config_file: json
     :param poker_config: CashGame configuration object
     """
-    for module, cls in config_file['baselines'].items():
-        module = importlib.import_module(f'baseline.{module}')
-        baseline_class = getattr(module, cls)
-        poker_config.register_player(cls, baseline_class())
+    baseline_counter = 1
+    while len(poker_config.config.players_info) < n_baselines:
+        for module, cls in config_file['baselines'].items():
+            module = importlib.import_module(f'baseline.{module}')
+            baseline_class = getattr(module, cls)
+            poker_config.register_player(f"{cls}_{baseline_counter}", baseline_class())
+            baseline_counter += 1
+
+            if (len(poker_config.config.players_info)) is n_baselines:
+                break
 
     for module, cls in config_file['players'].items():
         module = importlib.import_module(f'agent.{module}')
@@ -46,15 +52,16 @@ if __name__ == '__main__':
         poker_config = CashGameConfig(evaluations=config_file['n_evaluations'],
                                       small_blind_amount=config_file['small_blind'],
                                       log_file_location=config_file['log_file_location'])
-        register_players(config_file, poker_config)
+        register_players(config_file, poker_config, config_file['n_baselines'])
     else:
         # Use this for manual evaluation
-        poker_config = CashGameConfig(evaluations=100)
+        poker_config = CashGameConfig(evaluations=100000)
         # poker_config.register_player("Console", ConsolePlayer())
         poker_config.register_player("MyBot", MyBotPlayer())
         poker_config.add_all_available_baselines()
 
     print(f"Start evaluating {poker_config.evaluations} hands")
+
     start = time.time()
     result = poker_config.run_evaluation()
     end = time.time()
