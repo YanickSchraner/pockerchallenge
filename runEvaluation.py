@@ -56,9 +56,9 @@ if __name__ == '__main__':
     else:
         # Use this for manual evaluation
         poker_config = CashGameConfig(evaluations=100000)
+        poker_config.add_all_available_baselines(n_baselines=5)
         # poker_config.register_player("Console", ConsolePlayer())
         poker_config.register_player("MyBot", MyBotPlayer())
-        poker_config.add_all_available_baselines()
 
     print(f"Start evaluating {poker_config.evaluations} hands")
 

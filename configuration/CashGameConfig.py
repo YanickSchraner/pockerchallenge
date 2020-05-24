@@ -53,6 +53,11 @@ class CashGameConfig():
     def _get_config(self):
         return self.config
 
-    def add_all_available_baselines(self):
-        for baseline in self.baselines:
-            self.config.register_player(name=str(baseline), algorithm=baseline())
+    def add_all_available_baselines(self, n_baselines: int = 5):
+        baseline_counter = 1
+        while len(self.config.players_info) < n_baselines:
+            for baseline in self.baselines:
+                self.config.register_player(name=f"{str(baseline)}_{baseline_counter}", algorithm=baseline())
+                baseline_counter += 1
+                if len(self.config.players_info) == n_baselines:
+                    break
