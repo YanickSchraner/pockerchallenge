@@ -6,7 +6,7 @@
     "CallBaselinePokerPlayer": "CallBaselinePlayer",
     "RandomPokerPlayer": "RandomPlayer"
   },
-  "n_evaluations": 100,
+  "n_evaluations": 50000,
   "small_blind": 1,
   "n_baselines": 5,
   "log_file_location": "./logs"
